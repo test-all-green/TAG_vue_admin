@@ -20,7 +20,7 @@
 
 <script>
 import TopNav from "./components/TopNav";
-import Main from "./components/main";
+import Main from "./components/Main";
 export default {
   data() {
     return {};
@@ -45,13 +45,16 @@ export default {
 <style lang='scss' >
 .layout {
     background: #f0f2f5;
+    height:100%;
   .el-header {
-    height: 80px !important;
+    height: 60px !important;
     padding: 0;
   }
   .el-main {
-    height: 560px !important;
+    height: 680px !important;
     padding: 0;
+    margin-top:20px;
+    overflow: hidden;
   }
   .container {
     padding: 0 240px;

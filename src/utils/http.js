@@ -62,6 +62,9 @@ export function post(url, data = {}, params = {}) {
     url,
     data,
     params,
+    headers: {
+      'Content-Type': 'application/json'
+    },
   })
 }
 
