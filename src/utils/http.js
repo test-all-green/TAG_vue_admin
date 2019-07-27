@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import store from '@/store'
+import store from '@/store/store'
 import { getToken } from '@/utils/token'
 
 
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: 'http://5d367b1c86300e0014b64305.mockapi.io', // url = base url + request url
   timeout: 5000 // request timeout
 })
 

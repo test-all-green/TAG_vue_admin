@@ -20,7 +20,7 @@
 
 <script>
 import TopNav from "./components/TopNav";
-import Main from "./components/Main";
+import Main from "./components/main";
 export default {
   data() {
     return {};

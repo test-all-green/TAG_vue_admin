@@ -4,16 +4,16 @@
   <el-radio-button :label="false">展开</el-radio-button>
   <el-radio-button :label="true">收起</el-radio-button>
 </el-radio-group> -->
-<el-menu default-active="/test" class="el-menu-vertical-demo" @select="handleSelect" :collapse="isCollapse" :router="true"> 
-  <el-menu-item index="/test">
+<el-menu default-active="/user" class="el-menu-vertical-demo" @select="handleSelect" :collapse="isCollapse" :router="true"> 
+  <el-menu-item index="/user">
     <i class="el-icon-user"></i>
     <span slot="title">员工管理</span>
   </el-menu-item>
-  <el-menu-item index="2" >
+  <el-menu-item index="/parkingLot" >
     <i class="el-icon-truck" ></i>
     <span slot="title">停车场管理</span>
   </el-menu-item>
-  <el-menu-item index="3" disabled>
+  <el-menu-item index="/parkingOrder">
     <i class="el-icon-document"></i>
     <span slot="title">订单管理</span>
   </el-menu-item>
