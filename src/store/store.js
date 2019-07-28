@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { getUser } from "@/api/user";
-import { getParkingLots } from "@/api/parkingLot";
+import { getParkingLots,postParkingLot  } from "@/api/parkingLot";
 import { getParkingOrders } from "@/api/parkingOrder";
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         staffs:[],
-        parkingLots:[],
+        parkingLots:{},
         parkingOrders:[],
         demo:'demo'
     },
@@ -36,15 +36,17 @@ const store = new Vuex.Store({
             commit('setParkingStaffs', response)
           })
         },
-        fetchParkingLots({commit}){
-          getParkingLots().then((response)=>{
-            commit('setParkingLots', response)
-          })
+        async fetchParkingLots({commit}, {page, pageSize}){
+          commit('setParkingLots', await getParkingLots(page,pageSize))
         },
         fetchParkingOrders({commit}){
           getParkingOrders().then((response)=>{
             commit('setParkingOrders',response)
           })
+        },
+        async addParkingLot({commit,dispatch}, {form,page,pageSize}){
+          await postParkingLot(form)
+          dispatch('fetchParkingLots', {page:page,pageSize:pageSize})
         }
     }
 })
