@@ -5,7 +5,7 @@ import { getToken } from '@/utils/token'
 
 
 const service = axios.create({
-  baseURL: 'http://5d367b1c86300e0014b64305.mockapi.io', // url = base url + request url
+  baseURL: 'http://localhost:8088', // url = base url + request url
   timeout: 5000 // request timeout
 })
 

@@ -1,8 +1,37 @@
 <template>
   <div class="table-pane">
-    <el-row>
-      <el-button type="primary" @click="dialogFormVisible=true" size="small ">新建</el-button>
-    </el-row>
+    <div class="table-top">
+      <el-row  :gutter="10">
+        <el-col :span="2">
+          <el-button type="primary" @click="dialogFormVisible=true">新建</el-button>
+        </el-col>
+        <el-col :span="4" :offset="11">
+          <el-input v-model="searchCondition.name" placeholder="搜索名称"></el-input>
+        </el-col>
+        <el-col :span="2">
+          <el-input
+            v-model="searchCondition.min"
+            placeholder="最小容量"
+            oninput="value=value.replace(/[^\d]/g,'')"
+          ></el-input>
+        </el-col>
+        <el-col :span="1">
+          <span class="line">—</span>
+        </el-col>
+        <el-col :span="2">
+          <el-input
+            v-model="searchCondition.max"
+            placeholder="最大容量"
+            oninput="value=value.replace(/[^\d]/g,'')"
+          ></el-input>
+        </el-col>
+        <el-col :span="2">
+          <el-button @click="searchPLs" type="primary">
+            <i class="el-icon-search"></i>
+          </el-button>
+        </el-col>
+      </el-row>
+    </div>
     <el-table :data="$store.state.parkingLots.content" border style="width: 100%" height="529px">
       <el-table-column prop="id" label="id"></el-table-column>
       <el-table-column prop="parkingLotName" label="名字"></el-table-column>
@@ -48,7 +77,13 @@ export default {
         pagerCount: 5,
         pageSize: 10
       },
-      currentPage3: 1
+      currentPage3: 1,
+      searchCondition:{
+        name:'',
+        min:'',
+        max:''
+      },
+      condition:{}
     };
   },
 
@@ -57,7 +92,7 @@ export default {
   computed: {},
 
   mounted() {
-    this.$store.dispatch("fetchParkingLots", { page: 1, pageSize: 10 });
+    this.$store.dispatch("fetchParkingLots", { page: 1, pageSize: 10,condition:this.condition});
   },
 
   created() {},
@@ -65,8 +100,8 @@ export default {
   methods: {
     handleSizeChange(val) {},
     handleCurrentChange(val) {
-      this.$store.dispatch("fetchParkingLots", { page: val, pageSize: 10 });
-    },
+      this.$store.dispatch("fetchParkingLots", { page: val, pageSize: 10, condition:this.condition });
+    }, 
     onSubmit() {
       this.$store.dispatch("addParkingLot", {
         form: this.form,
@@ -78,11 +113,19 @@ export default {
         parkingLotName: "",
         parkingLotCapacity: ""
       };
+    },
+    searchPLs(){
+      this.condition = {
+         name:this.searchCondition.name,
+        min:this.searchCondition.min,
+        max:this.searchCondition.max
+      }
+      this.$store.dispatch("fetchParkingLots", { page: 1, pageSize: 10, condition:this.condition });
     }
   },
 
   filters: {}
 };
 </script>
-<style lang='scss' scoped>
+<style lang='scss' >
 </style>

@@ -1,21 +1,22 @@
 <template>
-    <div class="table-pane">
-        <el-row>
-            <el-button type="primary" size="small ">新建</el-button>
-        </el-row>
-        <el-table :data="$store.state.staffs" border style="width: 100%" height = "529px">
-            <el-table-column prop="id" label="id" width="180">
-            </el-table-column>
-            <el-table-column prop="staffName" label="姓名" width="180"></el-table-column>
-            <el-table-column prop="staffEmail" label="email"></el-table-column>
-            <el-table-column prop="staffPhone" label="电话号码"></el-table-column>
-        </el-table>
-        <el-pagination background layout="prev, pager, next" 
-            :total="pageData.total" 
-            :pager-count="pageData.pagerCount" 
-            :page-size="pageData.pageSize">
-        </el-pagination>
-    </div>
+  <div class="table-pane">
+    <el-row>
+      <el-button type="primary" size="small ">新建</el-button>
+    </el-row>
+    <el-table :data="$store.state.staffs" border style="width: 100%" height="529px">
+      <el-table-column prop="id" label="id" width="180"></el-table-column>
+      <el-table-column prop="staffName" label="姓名" width="180"></el-table-column>
+      <el-table-column prop="staffEmail" label="email"></el-table-column>
+      <el-table-column prop="staffPhone" label="电话号码"></el-table-column>
+    </el-table>
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="pageData.total"
+      :pager-count="pageData.pagerCount"
+      :page-size="pageData.pageSize"
+    ></el-pagination>
+  </div>
 </template>
 
 <script>
@@ -41,31 +42,49 @@ export default {
   created() {},
 
   methods: {
-      addUser(){
-
-      }
+    addUser() {}
   },
 
   filters: {}
 };
 </script>
 <style lang='scss' >
-.table-pane{
-    height:650px;
-    position: relative;
-    .el-row{
-        height:40px;
-    }
-    .el-button{
-        // line-height: 40px;
-        // padding:0;
-        // width:120px;
-    }
+.table-pane {
+  height: 650px;
+  position: relative;
+  .table-top{
+    .el-row {
+      height: 40px;
+      margin-bottom: 2px;
+
+      .line {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        line-height: 32px;
+      }
+      & i {
+        font-size: 20px;
+      }
+      .el-button {
+        padding: 0;
+        height: 32px;
+        width: 80px;
+        line-height: 32px;
+      }
+      .el-input {
+        height: 32px;
+      }
+      .el-input__inner {
+        padding-left: 12px;
+        height: 32px;
+      }
+    } 
+  }
 }
-.el-pagination{
-    position: absolute;
-    bottom: 10px;
-    right:10px;
-    
+.el-pagination {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 </style>
