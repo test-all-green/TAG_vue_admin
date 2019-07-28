@@ -24,7 +24,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addUser(form)">确 定</el-button>
+            <el-button type="primary" @click="addUser()">确 定</el-button>
           </div>
         </el-dialog>
 
@@ -35,10 +35,14 @@
             <el-table-column prop="staffEmail" label="email"></el-table-column>
             <el-table-column prop="staffPhone" label="电话号码"></el-table-column>
         </el-table>
-        <el-pagination background layout="prev, pager, next" 
-            :total="pageData.total" 
-            :pager-count="pageData.pagerCount" 
-            :page-size="pageData.pageSize">
+        <el-pagination 
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage3"
+          :page-size="$store.state.staffs.pageSize"
+          layout="prev, pager, next, jumper"
+          :total="$store.state.staffs.totalElements"
+        >
         </el-pagination>
     </div>
 </template>
@@ -52,6 +56,7 @@ export default {
         pagerCount: 5,
         pageSize: 10
       },
+      currentPage3: 1,
       dialogFormVisible: false,
       form: {
         staffName: '',
@@ -68,15 +73,29 @@ export default {
   computed: {},
 
   mounted() {
-    this.$store.dispatch("fetchParkingStaffs");
+    this.$store.dispatch("fetchParkingStaffs",{page:1,pageSize: 10});
     this.$store.dispatch("getStaffCharacter");
   },
 
   created() {},
 
   methods: {
-    addUser(form){
-      this.$store.dispatch("addParkingStaffs",form)
+    handleSizeChange(val) {},
+    handleCurrentChange(val) {
+      this.$store.dispatch("fetchParkingStaffs", { page: val, pageSize: 10 });
+    },
+    addUser(){
+      this.$store.dispatch("addParkingStaffs",{
+        form: this.form,
+        page: this.$store.state.staffs.number+1,
+        pageSize: 10
+      })
+      this.form={
+        staffName: '',
+        staffEmail: '',
+        staffPhone: '',
+        characterId: ''
+      }
       this.dialogFormVisible=false
     }
   },

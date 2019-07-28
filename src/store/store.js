@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { getUser,addUser } from "@/api/user";
-import { getParkingLots } from "@/api/parkingLot";
+import { getParkingLots,postParkingLot  } from "@/api/parkingLot";
 import { getParkingOrders } from "@/api/parkingOrder";
 import { getStaffCharacter } from "@/api/staffCharacter"
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         staffs:[],
-        parkingLots:[],
+        parkingLots:{},
         parkingOrders:[],
         characters:[],
         demo:'demo'
@@ -36,30 +36,29 @@ const store = new Vuex.Store({
         }
     },
     actions: {
-        fetchParkingStaffs({commit}){
-          getUser().then((response) => {
-            commit('setParkingStaffs', response)
-          })
+        async fetchParkingStaffs({commit}, {page, pageSize}){
+          commit('setParkingStaffs', await getUser(page,pageSize))
         },
-        fetchParkingLots({commit}){
-          getParkingLots().then((response)=>{
-            commit('setParkingLots', response)
-          })
+        async fetchParkingLots({commit}, {page, pageSize}){
+          commit('setParkingLots', await getParkingLots(page,pageSize))
         },
         fetchParkingOrders({commit}){
           getParkingOrders().then((response)=>{
             commit('setParkingOrders',response)
           })
         },
-        addParkingStaffs({dispatch},form){
-          addUser(form).then((response) => {
-            this.dispatch('fetchParkingStaffs')
-          })
+        async addParkingStaffs({dispatch},{form,page,pageSize}){
+          await addUser(form)
+          dispatch('fetchParkingStaffs',{page:page,pageSize})
         },
         getStaffCharacter({commit}){
           getStaffCharacter().then((response)=>{
             commit('setCharacters',response)
           })
+        },
+        async addParkingLot({commit,dispatch}, {form,page,pageSize}){
+          await postParkingLot(form)
+          dispatch('fetchParkingLots', {page:page,pageSize:pageSize})
         }
     }
 })
