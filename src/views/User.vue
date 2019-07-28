@@ -1,9 +1,34 @@
 <template>
     <div class="table-pane">
         <el-row>
-            <el-button type="primary" @click="addUser" size="small ">新建</el-button>
+            <el-button type="primary" @click="dialogFormVisible = true" size="small ">新建</el-button>
         </el-row>
-        <el-table :data="$store.state.staffs" border style="width: 100%" height = "529px">
+
+        <el-dialog title="新增员工" :visible.sync="dialogFormVisible">
+          <el-form :model="form">
+            <el-form-item label="姓名" :label-width="formLabelWidth">
+              <el-input v-model="form.staffName" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱" :label-width="formLabelWidth">
+              <el-input v-model="form.staffEmail" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="电话号码" :label-width="formLabelWidth">
+              <el-input v-model="form.staffPhone" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="角色" :label-width="formLabelWidth">
+              <el-select v-model="form.characterId" placeholder="请选择角色">
+                <el-option v-for="item in $store.state.characters" :key="item.id" :label="item.characterName" :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="addUser(form)">确 定</el-button>
+          </div>
+        </el-dialog>
+
+        <el-table :data="$store.state.staffs.content" border style="width: 100%" height = "529px">
             <el-table-column prop="id" label="id" width="180">
             </el-table-column>
             <el-table-column prop="staffName" label="姓名" width="180"></el-table-column>
@@ -26,7 +51,15 @@ export default {
         total: 100,
         pagerCount: 5,
         pageSize: 10
-      }
+      },
+      dialogFormVisible: false,
+      form: {
+        staffName: '',
+        staffEmail: '',
+        staffPhone: '',
+        characterId: ''
+      },
+      formLabelWidth: '120px',
     };
   },
 
@@ -36,14 +69,16 @@ export default {
 
   mounted() {
     this.$store.dispatch("fetchParkingStaffs");
+    this.$store.dispatch("getStaffCharacter");
   },
 
   created() {},
 
   methods: {
-      addUser(){
-
-      }
+    addUser(form){
+      this.$store.dispatch("addParkingStaffs",form)
+      this.dialogFormVisible=false
+    }
   },
 
   filters: {}

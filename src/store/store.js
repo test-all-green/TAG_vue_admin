@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getUser } from "@/api/user";
+import { getUser,addUser } from "@/api/user";
 import { getParkingLots } from "@/api/parkingLot";
 import { getParkingOrders } from "@/api/parkingOrder";
+import { getStaffCharacter } from "@/api/staffCharacter"
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         staffs:[],
         parkingLots:[],
         parkingOrders:[],
+        characters:[],
         demo:'demo'
     },
     getters: {
@@ -28,6 +30,9 @@ const store = new Vuex.Store({
         },
         setParkingOrders(state,parkingOrders){
           state.parkingOrders=parkingOrders
+        },
+        setCharacters(state,characters){
+          state.characters=characters
         }
     },
     actions: {
@@ -44,6 +49,16 @@ const store = new Vuex.Store({
         fetchParkingOrders({commit}){
           getParkingOrders().then((response)=>{
             commit('setParkingOrders',response)
+          })
+        },
+        addParkingStaffs({dispatch},form){
+          addUser(form).then((response) => {
+            this.dispatch('fetchParkingStaffs')
+          })
+        },
+        getStaffCharacter({commit}){
+          getStaffCharacter().then((response)=>{
+            commit('setCharacters',response)
           })
         }
     }
