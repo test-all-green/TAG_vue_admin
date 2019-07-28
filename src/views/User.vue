@@ -1,5 +1,8 @@
 <template>
     <div class="table-pane">
+        <el-row>
+            <el-button type="primary" @click="addUser" size="small ">新建</el-button>
+        </el-row>
         <el-table :data="$store.state.staffs" border style="width: 100%" height = "529px">
             <el-table-column prop="id" label="id" width="180">
             </el-table-column>
@@ -37,7 +40,11 @@ export default {
 
   created() {},
 
-  methods: {},
+  methods: {
+      addUser(){
+
+      }
+  },
 
   filters: {}
 };
@@ -46,6 +53,14 @@ export default {
 .table-pane{
     height:650px;
     position: relative;
+    .el-row{
+        height:40px;
+    }
+    .el-button{
+        // line-height: 40px;
+        // padding:0;
+        // width:120px;
+    }
 }
 .el-pagination{
     position: absolute;

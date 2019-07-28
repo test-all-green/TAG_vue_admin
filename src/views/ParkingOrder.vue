@@ -1,5 +1,8 @@
 <template>
     <div class="table-pane">
+         <el-row>
+            <el-button type="primary" @click="addUser" size="small ">新建</el-button>
+        </el-row>
         <el-table :data="$store.state.parkingOrders" border style="width: 100%" height = "529px">
             <el-table-column prop="id" label="id" ></el-table-column>
             <el-table-column prop="carNumber" label="车牌号" ></el-table-column>
