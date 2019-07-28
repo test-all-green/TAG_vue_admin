@@ -2,16 +2,14 @@
   <div class="layout">
     <el-container>
         <el-header>
-            <div class="container">
+            <div>
                 <top-nav></top-nav>
             </div>
         </el-header>
     <el-container>
-        <el-main>
             <div class="container">
                 <Main></Main>
             </div>
-        </el-main>
     </el-container>
 </el-container>
       
@@ -20,7 +18,7 @@
 
 <script>
 import TopNav from "./components/TopNav";
-import Main from "./components/main";
+import Main from "./components/Main";
 export default {
   data() {
     return {};
@@ -44,8 +42,8 @@ export default {
 </script>
 <style lang='scss' >
 .layout {
-    background: #f0f2f5;
-    height:100%;
+  background: #f0f2f5;
+  height: 100%;
   .el-header {
     height: 60px !important;
     padding: 0;
@@ -53,11 +51,15 @@ export default {
   .el-main {
     height: 680px !important;
     padding: 0;
-    margin-top:20px;
+    margin-top: 20px;
     overflow: hidden;
   }
   .container {
     padding: 0 240px;
+    width: 100%;
+    
+    margin-top: 20px;
+    
   }
 }
 </style>

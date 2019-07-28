@@ -50,6 +50,7 @@ export default {
   line-height: 60px;
   background: #026cd2;
   color: #fff;
+  padding: 0 240px;
   .el-image {
     height: 50px;
     width: 50px;
