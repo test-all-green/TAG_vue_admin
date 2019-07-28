@@ -42,19 +42,15 @@ const store = new Vuex.Store({
         async fetchParkingLots({commit}, {page, pageSize}){
           commit('setParkingLots', await getParkingLots(page,pageSize))
         },
-        fetchParkingOrders({commit}){
-          getParkingOrders().then((response)=>{
-            commit('setParkingOrders',response)
-          })
+        async fetchParkingOrders({commit}){
+          commit('setParkingOrders',await getParkingOrders())
         },
         async addParkingStaffs({dispatch},{form,page,pageSize}){
           await addUser(form)
           dispatch('fetchParkingStaffs',{page:page,pageSize})
         },
-        getStaffCharacter({commit}){
-          getStaffCharacter().then((response)=>{
-            commit('setCharacters',response)
-          })
+        async getStaffCharacter({commit}){
+            commit('setCharacters',await getStaffCharacter())
         },
         async addParkingLot({commit,dispatch}, {form,page,pageSize}){
           await postParkingLot(form)
