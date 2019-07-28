@@ -46,8 +46,8 @@
       :total="$store.state.parkingLots.totalElements"
     ></el-pagination>
     <el-dialog title="新增停车场" :visible.sync="dialogFormVisible">
-      <el-row tyle="flex" justify="center">
-        <el-col :span="16" :offset="3">
+      <el-row type="flex" justify="center">
+        <el-col :span="16" >
           <el-form :model="form" :rules="rules" ref="form">
             <el-form-item label="停车场名称" :label-width="formLabelWidth" prop="parkingLotName">
               <el-input v-model="form.parkingLotName" autocomplete="off"></el-input>
