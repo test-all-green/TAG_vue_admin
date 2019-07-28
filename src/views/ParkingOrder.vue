@@ -34,12 +34,7 @@ export default {
   computed: {},
 
   mounted() {
-    this.$store.dispatch("fetchParkingOrders").then(() => {
-      console.log(
-        "this.$store.state.parkingLots :",
-        this.$store.state.parkingLots
-      );
-    });
+    this.$store.dispatch("fetchParkingOrders")
   },
 
   created() {},

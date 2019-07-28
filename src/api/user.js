@@ -1,8 +1,8 @@
 import { post, get, put, _delete } from '@/utils/http'
 
-export function getUser() {
-  return get('/parking-staffs');
+export function getUser(page, pageSize) {
+  return get('/parking-staffs?pageNum='+page+'&pageSize='+pageSize);
 }
-export function testAPI(data) {
-  return post('/api',data);
+export function addUser(data) {
+  return post('/parking-staffs',data);
 }

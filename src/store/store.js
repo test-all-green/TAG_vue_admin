@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getUser } from "@/api/user";
+import { getUser,addUser } from "@/api/user";
 import { getParkingLots,postParkingLot  } from "@/api/parkingLot";
 import { getParkingOrders } from "@/api/parkingOrder";
+import { getStaffCharacter } from "@/api/staffCharacter"
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         staffs:[],
         parkingLots:{},
         parkingOrders:[],
+        characters:[],
         demo:'demo'
     },
     getters: {
@@ -28,21 +30,27 @@ const store = new Vuex.Store({
         },
         setParkingOrders(state,parkingOrders){
           state.parkingOrders=parkingOrders
+        },
+        setCharacters(state,characters){
+          state.characters=characters
         }
     },
     actions: {
-        fetchParkingStaffs({commit}){
-          getUser().then((response) => {
-            commit('setParkingStaffs', response)
-          })
+        async fetchParkingStaffs({commit}, {page, pageSize}){
+          commit('setParkingStaffs', await getUser(page,pageSize))
         },
         async fetchParkingLots({commit}, {page, pageSize,condition}){
           commit('setParkingLots', await getParkingLots(page,pageSize,condition))
         },
-        fetchParkingOrders({commit}){
-          getParkingOrders().then((response)=>{
-            commit('setParkingOrders',response)
-          })
+        async fetchParkingOrders({commit}){
+          commit('setParkingOrders',await getParkingOrders())
+        },
+        async addParkingStaffs({dispatch},{form,page,pageSize}){
+          await addUser(form)
+          dispatch('fetchParkingStaffs',{page:page,pageSize})
+        },
+        async getStaffCharacter({commit}){
+            commit('setCharacters',await getStaffCharacter())
         },
         async addParkingLot({commit,dispatch}, {form,page,pageSize}){
           await postParkingLot(form)
