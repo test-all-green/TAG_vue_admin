@@ -38,6 +38,11 @@
             <el-table-column prop="staffName" label="姓名" width="180"></el-table-column>
             <el-table-column prop="staffEmail" label="email"></el-table-column>
             <el-table-column prop="staffPhone" label="电话号码"></el-table-column>
+            <el-table-column label="zhiwei">
+              <template slot-scope="scope">
+                {{scope.row.staffCharacter.characterName|fil}}
+              </template>
+            </el-table-column>
         </el-table>
         <el-pagination
             @size-change="handleSizeChange"
@@ -106,7 +111,11 @@ export default {
         }
     },
 
-    filters: {}
+  filters: {
+    fil(val){
+      return val
+    }
+  }
 };
 </script>
 <style lang='scss' >
