@@ -1,6 +1,8 @@
 <template>
     <div class="table-pane">
-        <el-row></el-row>
+        <div class="table-top">
+            <el-row></el-row>
+        </div>
         <el-table
             :data="$store.getters.showParkingOrders"
             border

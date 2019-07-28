@@ -9,7 +9,7 @@ const store = new Vuex.Store({
   state: {
     staffs: [],
     parkingLots: {},
-    parkingOrders: [],
+    parkingOrders: {},
     characters: [],
     demo: 'demo'
   },
@@ -39,11 +39,12 @@ const store = new Vuex.Store({
     async fetchParkingStaffs({ commit }, { page, pageSize }) {
       commit('setParkingStaffs', await getUser(page, pageSize))
     },
-    async fetchParkingLots({ commit }, { page, pageSize }) {
-      commit('setParkingLots', await getParkingLots(page, pageSize))
+    async fetchParkingLots({ commit }, { page, pageSize ,condition}) {
+      commit('setParkingLots', await getParkingLots(page, pageSize,condition))
     },
     async fetchParkingOrders({ commit }, { page, pageSize }) {
-      console.log('await getParkingOrders(page, pageSize) :', await getParkingOrders(page, pageSize));
+      var aaa=await getParkingOrders(page, pageSize)
+      console.log('content', aaa.content);
       commit('setParkingOrders', await getParkingOrders(page, pageSize))
     },
     async addParkingStaffs({ dispatch }, { form, page, pageSize }) {
