@@ -99,9 +99,9 @@ export default {
     };
   },
 
-  components: {},
+    components: {},
 
-  computed: {},
+    computed: {},
 
   mounted() {
     this.$store.dispatch("fetchParkingLots", {
@@ -111,7 +111,7 @@ export default {
     });
   },
 
-  created() {},
+    created() {},
 
   methods: {
     handleSizeChange(val) {},
@@ -154,7 +154,7 @@ export default {
     }
   },
 
-  filters: {}
+    filters: {}
 };
 </script>
 <style lang='scss' >

@@ -1,5 +1,5 @@
 import { post, get, put, _delete } from '@/utils/http'
 
-export function getParkingOrders() {
-  return get('/parking-orders');
+export function getParkingOrders(page, pageSize) {
+  return get('/parking-orders?page='+page+'&pageSize='+pageSize);
 }
