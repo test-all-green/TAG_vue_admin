@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import {updateUser} from '../api/user'
 export default {
   data() {
     return {
@@ -134,11 +135,13 @@ export default {
       this.dialogFormVisible = true;
       this.editFlag = true;
     },
-    editUser(){
+    async editUser(){
       //请求 this.form
-
+      await updateUser(this.form)
       this.resetForm();
       this.dialogFormVisible = false;
+       this.$store.dispatch("fetchParkingStaffs", { page: 1, pageSize: 10 });
+       this.currentPage = 1;
     }
   },
 
