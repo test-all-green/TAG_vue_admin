@@ -11,5 +11,5 @@ export function getParkingLots(page, pageSize, condition) {
 }
 
 export function postParkingLot(entity) {
-  return post('http://localhost:8088/parking-lots',entity);
+  return post('/parking-lots',entity);
 }

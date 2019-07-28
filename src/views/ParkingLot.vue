@@ -1,7 +1,7 @@
 <template>
   <div class="table-pane">
     <div class="table-top">
-      <el-row  :gutter="10">
+      <el-row :gutter="10">
         <el-col :span="2">
           <el-button type="primary" @click="dialogFormVisible=true">新建</el-button>
         </el-col>
@@ -45,18 +45,22 @@
       layout="prev, pager, next, jumper"
       :total="$store.state.parkingLots.totalElements"
     ></el-pagination>
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
-        <el-form-item label="停车场名称" :label-width="formLabelWidth">
-          <el-input v-model="form.parkingLotName" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="停车场容量" :label-width="formLabelWidth">
-          <el-input v-model="form.parkingLotCapacity" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
+    <el-dialog title="新增停车场" :visible.sync="dialogFormVisible">
+      <el-row tyle="flex" justify="center">
+        <el-col :span="16" :offset="3">
+          <el-form :model="form" :rules="rules" ref="form">
+            <el-form-item label="停车场名称" :label-width="formLabelWidth" prop="parkingLotName">
+              <el-input v-model="form.parkingLotName" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="停车场容量" :label-width="formLabelWidth" prop="parkingLotCapacity">
+              <el-input v-model="form.parkingLotCapacity" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="onSubmit">确 定</el-button>
+        <el-button type="primary" @click="onSubmit('form')">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -78,12 +82,20 @@ export default {
         pageSize: 10
       },
       currentPage3: 1,
-      searchCondition:{
-        name:'',
-        min:'',
-        max:''
+      searchCondition: {
+        name: "",
+        min: "",
+        max: ""
       },
-      condition:{}
+      condition: {},
+      rules: {
+        parkingLotName: [
+          { required: true, message: "请输入停车场名称", trigger: "blur" }
+        ],
+        parkingLotCapacity: [
+          { required: true, message: "请输入停车场容量", trigger: "blur" }
+        ]
+      }
     };
   },
 
@@ -92,7 +104,11 @@ export default {
   computed: {},
 
   mounted() {
-    this.$store.dispatch("fetchParkingLots", { page: 1, pageSize: 10,condition:this.condition});
+    this.$store.dispatch("fetchParkingLots", {
+      page: 1,
+      pageSize: 10,
+      condition: this.condition
+    });
   },
 
   created() {},
@@ -100,9 +116,19 @@ export default {
   methods: {
     handleSizeChange(val) {},
     handleCurrentChange(val) {
-      this.$store.dispatch("fetchParkingLots", { page: val, pageSize: 10, condition:this.condition });
-    }, 
-    onSubmit() {
+      this.$store.dispatch("fetchParkingLots", {
+        page: val,
+        pageSize: 10,
+        condition: this.condition
+      });
+    },
+    onSubmit(form) {
+      this.$refs[form].validate(valid => {
+        if (!valid) {
+          this.$message.error("输入的名称和容量不能为空!");
+          return false;
+        } 
+      });
       this.$store.dispatch("addParkingLot", {
         form: this.form,
         page: this.$store.state.parkingLots.number + 1,
@@ -114,13 +140,17 @@ export default {
         parkingLotCapacity: ""
       };
     },
-    searchPLs(){
+    searchPLs() {
       this.condition = {
-         name:this.searchCondition.name,
-        min:this.searchCondition.min,
-        max:this.searchCondition.max
-      }
-      this.$store.dispatch("fetchParkingLots", { page: 1, pageSize: 10, condition:this.condition });
+        name: this.searchCondition.name,
+        min: this.searchCondition.min,
+        max: this.searchCondition.max
+      };
+      this.$store.dispatch("fetchParkingLots", {
+        page: 1,
+        pageSize: 10,
+        condition: this.condition
+      });
     }
   },
 

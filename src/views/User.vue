@@ -136,6 +136,9 @@ export default {
       }
     } 
   }
+  .el-dialog{
+    width:33%;
+  }
 }
 .el-pagination {
   position: absolute;
