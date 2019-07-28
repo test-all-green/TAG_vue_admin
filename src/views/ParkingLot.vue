@@ -130,6 +130,7 @@ export default {
         } 
       });
       this.$store.dispatch("addParkingLot", {
+        condition: this.condition,
         form: this.form,
         page: this.$store.state.parkingLots.number + 1,
         pageSize: 10

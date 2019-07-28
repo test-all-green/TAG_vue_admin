@@ -54,9 +54,9 @@ const store = new Vuex.Store({
     async getStaffCharacter({ commit }) {
       commit('setCharacters', await getStaffCharacter())
     },
-    async addParkingLot({ commit, dispatch }, { form, page, pageSize }) {
+    async addParkingLot({ commit, dispatch }, { form, page, pageSize,condition }) {
       await postParkingLot(form)
-      dispatch('fetchParkingLots', { page: page, pageSize: pageSize })
+      dispatch('fetchParkingLots', { page: page, pageSize: pageSize,condition: condition })
     }
   },
   getters: {
