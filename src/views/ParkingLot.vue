@@ -11,7 +11,7 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
+      :current-page.sync="currentPage"
       :page-size="$store.state.parkingLots.pageSize"
       layout="prev, pager, next, jumper"
       :total="$store.state.parkingLots.totalElements"
@@ -48,7 +48,7 @@ export default {
         pagerCount: 5,
         pageSize: 10
       },
-      currentPage3: 1
+      currentPage: 1
     };
   },
 

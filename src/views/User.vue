@@ -38,7 +38,7 @@
         <el-pagination 
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page.sync="currentPage3"
+          :current-page.sync="currentPage"
           :page-size="$store.state.staffs.pageSize"
           layout="prev, pager, next, jumper"
           :total="$store.state.staffs.totalElements"
@@ -56,7 +56,7 @@ export default {
         pagerCount: 5,
         pageSize: 10
       },
-      currentPage3: 1,
+      currentPage: 1,
       dialogFormVisible: false,
       form: {
         staffName: '',
