@@ -92,10 +92,10 @@ export default {
 
   computed: {},
 
-  mounted() {
-    this.$store.dispatch("fetchParkingStaffs", { page: 1, pageSize: 10 });
-    this.$store.dispatch("getStaffCharacter");
-  },
+  // mounted() {
+  //   this.$store.dispatch("fetchParkingStaffs", { page: 1, pageSize: 10 });
+  //   this.$store.dispatch("getStaffCharacter");
+  // },
 
   created() {},
 
@@ -173,7 +173,7 @@ export default {
       .el-button {
         padding: 0;
         height: 32px;
-        width: 80px;
+        width: 100%;
         line-height: 32px;
       }
       .el-input {

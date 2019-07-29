@@ -9,7 +9,9 @@ const store = new Vuex.Store({
   state: {
     staffs: [],
     parkingLots: {},
-    parkingOrders: {},
+    parkingOrders: {
+      content:[]
+    },
     characters: [],
     demo: 'demo'
   },

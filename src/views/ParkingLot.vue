@@ -35,7 +35,15 @@
     <el-table :data="$store.state.parkingLots.content" border style="width: 100%" height="529px">
       <el-table-column prop="id" label="id"></el-table-column>
       <el-table-column prop="parkingLotName" label="名字"></el-table-column>
-      <el-table-column prop="parkingLotCapacity" label="大小"></el-table-column>
+      <el-table-column prop="parkingLotCapacity" label="容量"></el-table-column>
+      <el-table-column prop="location" label="地址"></el-table-column>
+      <el-table-column prop="regionId" label="区域"></el-table-column>
+      <el-table-column label="操作" align="center" fixed="right" width="150">
+        <template slot-scope="scope">
+          <el-button type="primary" icon="el-icon-edit" circle size="small" @click="edit(scope.row)"></el-button>
+          <el-button type="primary" icon="el-icon-delete" circle size="small" style="background-color:red; border-color:red"></el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       @size-change="handleSizeChange"
@@ -55,6 +63,12 @@
             <el-form-item label="停车场容量" :label-width="formLabelWidth" prop="parkingLotCapacity">
               <el-input v-model="form.parkingLotCapacity" autocomplete="off"></el-input>
             </el-form-item>
+            <el-form-item label="停车场地址" :label-width="formLabelWidth" prop="location">
+              <el-input v-model="form.location" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="停车场区域" :label-width="formLabelWidth" prop="regionId">
+              <el-input v-model="form.regionId" autocomplete="off"></el-input>
+            </el-form-item>
           </el-form>
         </el-col>
       </el-row>
@@ -73,7 +87,9 @@ export default {
       dialogFormVisible: false,
       form: {
         parkingLotName: "",
-        parkingLotCapacity: ""
+        parkingLotCapacity: "",
+        location:"",
+        regionId:""
       },
       formLabelWidth: "120px",
       pageData: {
@@ -104,11 +120,12 @@ export default {
     computed: {},
 
   mounted() {
-    this.$store.dispatch("fetchParkingLots", {
-      page: 1,
-      pageSize: 10,
-      condition: this.condition
-    });
+    // this.$store.dispatch("fetchParkingLots", {
+    //   page: 1,
+    //   pageSize: 10,
+    //   condition: {}
+    // });
+    this.$store.dispatch("fetchRegion");
   },
 
     created() {},

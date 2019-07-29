@@ -42,9 +42,9 @@ export default {
 
     computed: {},
 
-    mounted() {
-        this.$store.dispatch("fetchParkingOrders", { page: 1, pageSize: 10 });
-    },
+    // mounted() {
+    //     this.$store.dispatch("fetchParkingOrders", { page: 1, pageSize: 10 });
+    // },
 
     created() {},
 

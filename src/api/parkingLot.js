@@ -1,7 +1,7 @@
 import { post, get, put, _delete } from '@/utils/http'
 
 export function getParkingLots(page, pageSize, condition) {
-  return get('/parking-lots',{
+  return get('/public-parking-lots',{
     name: condition.name || null,
     min: condition.min || null,
     max: condition.max || null,
@@ -11,5 +11,6 @@ export function getParkingLots(page, pageSize, condition) {
 }
 
 export function postParkingLot(entity) {
-  return post('/parking-lots',entity);
+  return post('/public-parking-lots',entity);
 }
+
