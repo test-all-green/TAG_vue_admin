@@ -30,7 +30,7 @@ pipeline {
             steps {
                 sh '''
                     export BUILD_ID=dontKillMe
-scp -o StrictHostKeyChecking=no -i ~/.ssh/ooclserver_rsa -r /var/lib/jenkins/workspace/prod-parking-tag-frontend-admin/dist /usr/share/nginx/html/
+scp -o StrictHostKeyChecking=no -i ~/.ssh/ooclserver_rsa -r /var/lib/jenkins/workspace/prod-parking-tag-frontend-admin/dist root@39.98.243.100:/usr/share/nginx/html/
                 '''
             }
         }
