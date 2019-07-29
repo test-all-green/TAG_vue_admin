@@ -4,6 +4,7 @@ import { getUser, addUser } from "@/api/user";
 import { getParkingLots, postParkingLot } from "@/api/parkingLot";
 import { getParkingOrders } from "@/api/parkingOrder";
 import { getStaffCharacter } from "@/api/staffCharacter"
+import { getRegion } from "@/api/region"
 Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
@@ -13,6 +14,7 @@ const store = new Vuex.Store({
       content:[]
     },
     characters: [],
+    regions: [],
     demo: 'demo'
   },
   getters: {
@@ -35,6 +37,9 @@ const store = new Vuex.Store({
     },
     setCharacters(state, characters) {
       state.characters = characters
+    },
+    setRegions(state, regions) {
+      state.regions = regions
     }
   },
   actions: {
@@ -60,6 +65,9 @@ const store = new Vuex.Store({
     async addParkingLot({ commit, dispatch }, { form, page, pageSize,condition }) {
       await postParkingLot(form)
       dispatch('fetchParkingLots', { page: page, pageSize: pageSize,condition: condition })
+    },
+    async getRegion({ commit }) {
+      commit('setRegions', await getRegion())
     }
   },
   getters: {

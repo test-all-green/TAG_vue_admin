@@ -35,9 +35,12 @@
     <el-table :data="$store.state.parkingLots.content" border style="width: 100%" height="529px">
       <el-table-column prop="id" label="id"></el-table-column>
       <el-table-column prop="parkingLotName" label="名字"></el-table-column>
-      <el-table-column prop="parkingLotCapacity" label="容量"></el-table-column>
+      <el-table-column prop="parkingLotCapacity" label="位置总数"></el-table-column>
+      <el-table-column prop="remain" label="剩余容量"></el-table-column>
       <el-table-column prop="location" label="地址"></el-table-column>
-      <el-table-column prop="regionId" label="区域"></el-table-column>
+      <el-table-column label="区域" width="150" align="center" prop="regionId">
+        <template slot-scope="scope">{{$store.state.regions.filter(ei=>ei.id===scope.row.regionId)[0].regionName}}</template>
+      </el-table-column>
       <el-table-column label="操作" align="center" fixed="right" width="150">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" circle size="small" @click="edit(scope.row)"></el-button>
@@ -66,9 +69,19 @@
             <el-form-item label="停车场地址" :label-width="formLabelWidth" prop="location">
               <el-input v-model="form.location" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="停车场区域" :label-width="formLabelWidth" prop="regionId">
-              <el-input v-model="form.regionId" autocomplete="off"></el-input>
+            <el-form-item label="区域" :label-width="formLabelWidth">
+              <el-select v-model="form.regionId" placeholder="请选择区域" >
+                <el-option
+                  v-for="item in $store.state.regions"
+                  :key="item.id"
+                  :label="item.regionName"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
             </el-form-item>
+            <!-- <el-form-item label="停车场区域" :label-width="formLabelWidth" prop="regionId">
+              <el-input v-model="form.regionId" autocomplete="off"></el-input>
+            </el-form-item> -->
           </el-form>
         </el-col>
       </el-row>
@@ -125,7 +138,7 @@ export default {
     //   pageSize: 10,
     //   condition: {}
     // });
-    this.$store.dispatch("fetchRegion");
+    this.$store.dispatch("getRegion");
   },
 
     created() {},
