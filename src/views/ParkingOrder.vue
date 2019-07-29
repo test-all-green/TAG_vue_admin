@@ -10,7 +10,7 @@
             height="529px"
         >
             <el-table-column prop="id" label="id"></el-table-column>
-            <el-table-column prop="carNumber" label="车牌号"></el-table-column>
+            <el-table-column prop="carNum" label="车牌号"></el-table-column>
             <el-table-column prop="parkingOrderType" label="类型"></el-table-column>
             <el-table-column prop="parkingOrderStatus" label="状态"></el-table-column>
         </el-table>
