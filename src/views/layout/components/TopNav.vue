@@ -1,18 +1,18 @@
 <template>
   <div class="top">
       <el-row type="flex" justify="space-between" align="middle">
-        <el-image :src="logo"></el-image>
+        <!-- <el-image :src="newlogo"></el-image> -->
         <div class="info">
-          <span>{{'名字'}}</span>
+          <!-- <span>{{'名字'}}</span> -->
           <!-- <i class="el-icon-arrow-down"></i> -->
-          <el-dropdown>
+          <!-- <el-dropdown>
             <span class="el-dropdown-link">
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item icon="el-icon-s-promotion">登出</el-dropdown-item>
           </el-dropdown-menu>
-          </el-dropdown>
+          </el-dropdown> -->
         </div>
       </el-row>
   </div>
