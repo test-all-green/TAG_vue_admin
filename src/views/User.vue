@@ -17,11 +17,21 @@
             <el-form-item label="姓名" :label-width="formLabelWidth">
               <el-input v-model="form.employeeName" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="邮箱" :label-width="formLabelWidth">
+            <el-form-item label="邮箱" :label-width="formLabelWidth"
+              prop="email"
+              :rules="[
+                { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }
+              ]"
+            >
               <el-input v-model="form.email" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="电话号码" :label-width="formLabelWidth">
-              <el-input v-model="form.phone" autocomplete="off"></el-input>
+            <el-form-item label="电话号码" :label-width="formLabelWidth"
+              prop="phone"
+              :rules="[
+                { type: 'number', message: '年龄必须为数字值'}
+              ]"
+            >
+              <el-input type="phone" v-model.number="form.phone" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="角色" :label-width="formLabelWidth">
               <el-select v-model="form.roleId" placeholder="请选择角色" >
