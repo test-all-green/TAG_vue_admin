@@ -1,3 +1,4 @@
+    
 pipeline {
     agent none
 
@@ -29,7 +30,7 @@ pipeline {
             steps {
                 sh '''
                     export BUILD_ID=dontKillMe
-cp -rf /var/lib/jenkins/workspace/parking-tag-frontend-admin/dist /var/prod/parking-tag-frontend-admin
+scp -o StrictHostKeyChecking=no -i ~/.ssh/ooclserver_rsa -rf /var/lib/jenkins/workspace/prod-parking-tag-frontend-admin/dist /usr/share/nginx/html/
                 '''
             }
         }
