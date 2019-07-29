@@ -7,7 +7,7 @@
           </el-col>
       </el-row>
     </div>
-    <el-dialog :title="dialogText" :visible.sync="dialogFormVisible" @close="close">
+    <el-dialog title="新建用户" :visible.sync="dialogFormVisible" @close="closeAdd" width="60%">
       <el-row type="flex" justify="center">
         <el-col :span="16" >
           <el-form :model="form" label-width="120" ref="form">
@@ -37,9 +37,36 @@
         </el-col>
       </el-row>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="close">取 消</el-button>
-        <el-button type="primary" @click="addUser()" v-if="editFlag == false">确 定</el-button>
-        <el-button type="primary" @click="editUser()" v-if="editFlag == true">修 改</el-button>
+        <el-button @click="closeAdd">取 消</el-button>
+        <el-button type="primary" @click="addUser()">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="修改用户" :visible.sync="dialogModifyFormVisible" @close="closeModify" width="60%">
+      <el-row type="flex" justify="center">
+        <el-col :span="16" >
+          <el-form :model="form" label-width="120" ref="form">
+            <el-form-item label="工号" :label-width="formLabelWidth">
+              <el-input v-model="form.employeeId" autocomplete="off" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="姓名" :label-width="formLabelWidth">
+              <el-input v-model="form.employeeName" autocomplete="off" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="角色" :label-width="formLabelWidth">
+              <el-select v-model="form.roleId" placeholder="请选择角色" >
+                <el-option
+                  v-for="item in $store.state.characters"
+                  :key="item.id"
+                  :label="item.roleName"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="closeModify">取 消</el-button>
+        <el-button type="primary" @click="editUser()">修 改</el-button>
       </div>
     </el-dialog>
     <el-table :data="$store.state.staffs.content" border style="width: 100%" height="531px" size="small">
@@ -73,15 +100,14 @@ import {updateUser} from '../api/user'
 export default {
   data() {
     return {
-      dialogText:"新建用户",
       pageData: {
         total: 100,
         pagerCount: 5,
         pageSize: 10
       },
       currentPage: 1,
-      editFlag:false,
       dialogFormVisible: false,
+      dialogModifyFormVisible: false,
       form: {
         id:"",
         employeeId: "",
@@ -113,11 +139,13 @@ export default {
         pageSize: 10
       });
     },
-    close(){
+    closeAdd(){
       this.resetForm();
       this.dialogFormVisible = false;
-      this.dialogText="新建用户";
-      this.editFlag=false;
+    },
+    closeModify(){
+      this.resetForm();
+      this.dialogModifyFormVisible = false;
     },
     resetForm(){
       this.form = {
@@ -143,16 +171,16 @@ export default {
       this.dialogText="修改用户";
       console.log(row)
       this.form = row;
-      this.dialogFormVisible = true;
-      this.editFlag = true;
+      this.dialogModifyFormVisible = true;
+      // this.editFlag = true;
     },
     async editUser(){
       //请求 this.form
       await updateUser(this.form)
       this.resetForm();
-      this.dialogFormVisible = false;
-       this.$store.dispatch("fetchParkingStaffs", { page: 1, pageSize: 10 });
-       this.currentPage = 1;
+      this.dialogModifyFormVisible = false;
+      this.$store.dispatch("fetchParkingStaffs", { page: 1, pageSize: 10 });
+      this.currentPage = 1;
     }
   },
 
