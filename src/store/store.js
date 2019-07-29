@@ -50,6 +50,7 @@ const store = new Vuex.Store({
       commit('setParkingOrders', await getParkingOrders(page, pageSize))
     },
     async addParkingStaffs({ dispatch }, { form, page, pageSize }) {
+      console.log(form)
       await addUser(form)
       dispatch('fetchParkingStaffs', { page: page, pageSize })
     },

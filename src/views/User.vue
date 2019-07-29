@@ -7,25 +7,28 @@
           </el-col>
       </el-row>
     </div>
-    <el-dialog title="新增员工" :visible.sync="dialogFormVisible" @close="close">
+    <el-dialog :title="dialogText" :visible.sync="dialogFormVisible" @close="close">
       <el-row type="flex" justify="center">
         <el-col :span="16" >
-          <el-form :model="form" label-width="120">
+          <el-form :model="form" label-width="120" ref="form">
+            <el-form-item label="工号" :label-width="formLabelWidth">
+              <el-input v-model="form.employeeId" autocomplete="off"></el-input>
+            </el-form-item>
             <el-form-item label="姓名" :label-width="formLabelWidth">
-              <el-input v-model="form.staffName" autocomplete="off"></el-input>
+              <el-input v-model="form.employeeName" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="邮箱" :label-width="formLabelWidth">
-              <el-input v-model="form.staffEmail" autocomplete="off"></el-input>
+              <el-input v-model="form.email" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="电话号码" :label-width="formLabelWidth">
-              <el-input v-model="form.staffPhone" autocomplete="off"></el-input>
+              <el-input v-model="form.phone" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="角色" :label-width="formLabelWidth">
-              <el-select v-model="form.staffCharacter.id" placeholder="请选择角色" >
+              <el-select v-model="form.roleId" placeholder="请选择角色" >
                 <el-option
                   v-for="item in $store.state.characters"
                   :key="item.id"
-                  :label="item.characterName"
+                  :label="item.roleName"
                   :value="item.id"
                 ></el-option>
               </el-select>
@@ -39,14 +42,13 @@
         <el-button type="primary" @click="editUser()" v-if="editFlag == true">修 改</el-button>
       </div>
     </el-dialog>
-
     <el-table :data="$store.state.staffs.content" border style="width: 100%" height="531px" size="small">
-      <el-table-column prop="id" label="id" width="120" align="center"></el-table-column>
-      <el-table-column prop="staffName" label="姓名" width="150" align="center"></el-table-column>
-      <el-table-column prop="staffEmail" label="email" align="center"></el-table-column>
-      <el-table-column prop="staffPhone" label="电话号码" align="center"></el-table-column>
+      <el-table-column prop="employeeId" label="工号" width="120" align="center"></el-table-column>
+      <el-table-column prop="employeeName" label="姓名" width="150" align="center"></el-table-column>
+      <el-table-column prop="email" label="email" align="center"></el-table-column>
+      <el-table-column prop="phone" label="电话号码" align="center"></el-table-column>
       <el-table-column label="职位" width="150" align="center">
-        <template slot-scope="scope">{{scope.row.staffCharacter.characterName}}</template>
+        <template slot-scope="scope">{{$store.state.characters.filter(ei=>ei.id===scope.row.roleId)[0].roleName}}</template>
       </el-table-column>
       <el-table-column label="操作" align="center" fixed="right" width="150">
         <template slot-scope="scope">
@@ -71,6 +73,7 @@ import {updateUser} from '../api/user'
 export default {
   data() {
     return {
+      dialogText:"新建用户",
       pageData: {
         total: 100,
         pagerCount: 5,
@@ -81,10 +84,11 @@ export default {
       dialogFormVisible: false,
       form: {
         id:"",
-        staffName: "",
-        staffEmail: "",
-        staffPhone: "",
-        staffCharacter: {}
+        employeeId: "",
+        employeeName: "",
+        email: "",
+        phone: "",
+        roleId: ""
       },
       formLabelWidth: "120px"
     };
@@ -112,17 +116,21 @@ export default {
     close(){
       this.resetForm();
       this.dialogFormVisible = false;
+      this.dialogText="新建用户";
+      this.editFlag=false;
     },
     resetForm(){
       this.form = {
         id:"",
-        staffName: "",
-        staffEmail: "",
-        staffPhone: "",
-        staffCharacter:{}
+        employeeId: "",
+        employeeName: "",
+        email: "",
+        phone: "",
+        roleId: ""
       };
     },
     addUser() {
+      console.log(this.form)
       this.$store.dispatch("addParkingStaffs", {
         form: this.form,
         page: this.$store.state.staffs.number + 1,
@@ -132,6 +140,7 @@ export default {
       this.dialogFormVisible = false;
     },
     edit(row){
+      this.dialogText="修改用户";
       console.log(row)
       this.form = row;
       this.dialogFormVisible = true;
