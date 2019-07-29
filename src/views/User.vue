@@ -2,7 +2,9 @@
   <div class="table-pane">
     <div class="table-top">
       <el-row>
-        <el-button type="primary" @click="dialogFormVisible = true" size="small ">新建</el-button>
+          <el-col :span="2">
+            <el-button type="primary" @click="dialogFormVisible = true" size="small ">新建</el-button>
+          </el-col>
       </el-row>
     </div>
     <el-dialog title="新增员工" :visible.sync="dialogFormVisible" @close="close">
