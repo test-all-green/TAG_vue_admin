@@ -1,9 +1,9 @@
 <template>
   <div class="top">
       <el-row type="flex" justify="space-between" align="middle">
-        <!-- <el-image :src="newlogo"></el-image> -->
+        <el-image :src="logo" style="width:80px;height:80px;"></el-image>
         <div class="info">
-          <!-- <span>{{'名字'}}</span> -->
+          <span>Admin</span>
           <!-- <i class="el-icon-arrow-down"></i> -->
           <!-- <el-dropdown>
             <span class="el-dropdown-link">
@@ -23,7 +23,7 @@ import { getToken } from "@/utils/token";
 export default {
   data() {
     return {
-      logo: require("../../../assets/logo.png")
+      logo: require("../../../assets/newlogo.png")
     };
   },
 
