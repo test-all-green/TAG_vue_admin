@@ -5,7 +5,7 @@ import { getToken } from '@/utils/token'
 
 
 const service = axios.create({
-  baseURL: 'http://localhost:8088/', // url = base url + request url
+  baseURL: 'http://39.98.243.100:8088/', // url = base url + request url
   timeout: 5000 // request timeout
 })
 
