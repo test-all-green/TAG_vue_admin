@@ -20,6 +20,8 @@ export default {
     });
 
     this.$store.dispatch("fetchParkingOrders", { page: 1, pageSize: 10 });
+
+    this.$store.dispatch("getRegion");
   }
 };
 </script>

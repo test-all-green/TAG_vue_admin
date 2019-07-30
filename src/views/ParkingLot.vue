@@ -138,7 +138,7 @@ export default {
     //   pageSize: 10,
     //   condition: {}
     // });
-    this.$store.dispatch("getRegion");
+    // this.$store.dispatch("getRegion");
   },
 
     created() {},
