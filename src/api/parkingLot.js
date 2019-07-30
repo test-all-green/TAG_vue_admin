@@ -14,3 +14,7 @@ export function postParkingLot(entity) {
   return post('/public-parking-lots',entity);
 }
 
+export function updatePublicParkingLot(data){
+  return put('/public-parking-lots/'+data.id,data)
+}
+

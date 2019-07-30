@@ -35,8 +35,8 @@
     <el-table :data="$store.state.parkingLots.content" border style="width: 100%" height="529px">
       <el-table-column prop="id" label="id"></el-table-column>
       <el-table-column prop="parkingLotName" label="名字"></el-table-column>
-      <el-table-column prop="parkingLotCapacity" label="位置总数"></el-table-column>
-      <el-table-column prop="remain" label="剩余容量"></el-table-column>
+      <el-table-column prop="parkingLotCapacity" label="大小"></el-table-column>
+      <!-- <el-table-column prop="remain" label="剩余容量"></el-table-column> -->
       <el-table-column prop="location" label="地址"></el-table-column>
       <el-table-column label="区域" width="150" align="center" prop="regionId">
         <template slot-scope="scope">{{$store.state.regions.filter(ei=>ei.id===scope.row.regionId)[0].regionName}}</template>
@@ -44,7 +44,7 @@
       <el-table-column label="操作" align="center" fixed="right" width="150">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" circle size="small" @click="edit(scope.row)"></el-button>
-          <el-button type="primary" icon="el-icon-delete" circle size="small" style="background-color:red; border-color:red"></el-button>
+          <!-- <el-button type="primary" icon="el-icon-delete" circle size="small" style="background-color:red; border-color:red" @click="del(scope.row)"></el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -63,7 +63,7 @@
             <el-form-item label="停车场名称" :label-width="formLabelWidth" prop="parkingLotName">
               <el-input v-model="form.parkingLotName" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="停车场容量" :label-width="formLabelWidth" prop="parkingLotCapacity">
+            <el-form-item label="大小" :label-width="formLabelWidth" prop="parkingLotCapacity">
               <el-input v-model="form.parkingLotCapacity" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="停车场地址" :label-width="formLabelWidth" prop="location">
@@ -90,14 +90,34 @@
         <el-button type="primary" @click="onSubmit('form')">确 定</el-button>
       </div>
     </el-dialog>
+    <el-dialog title="修改停车场" :visible.sync="dialogModifyFormVisible" @close="closeModify" width="60%">
+      <el-row type="flex" justify="center">
+        <el-col :span="16" >
+          <el-form :model="form" label-width="120" ref="form">
+            <el-form-item label="停车场名称" :label-width="formLabelWidth" prop="parkingLotName">
+              <el-input v-model="form.parkingLotName" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="大小" :label-width="formLabelWidth" prop="parkingLotCapacity">
+              <el-input v-model="form.parkingLotCapacity" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="closeModify">取 消</el-button>
+        <el-button type="primary" @click="editPublicParkingLot()">修 改</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import {updatePublicParkingLot} from '../api/parkingLot'
 export default {
   data() {
     return {
       dialogFormVisible: false,
+      dialogModifyFormVisible: false,
       form: {
         parkingLotName: "",
         parkingLotCapacity: "",
@@ -182,6 +202,25 @@ export default {
         pageSize: 10,
         condition: this.condition
       });
+    },
+    edit(row){
+      // this.dialogText="修改用户";
+      console.log(row)
+      this.form = row;
+      this.dialogModifyFormVisible = true;
+      // this.editFlag = true;
+    },
+    closeModify(){
+      // this.resetForm();
+      this.dialogModifyFormVisible = false;
+    },
+    async editPublicParkingLot(){
+      //请求 this.form
+      await updatePublicParkingLot(this.form)
+      // this.resetForm();
+      this.dialogModifyFormVisible = false;
+      this.$store.dispatch("fetchParkingLots", { page: 1, pageSize: 10 });
+      this.currentPage = 1;
     }
   },
 

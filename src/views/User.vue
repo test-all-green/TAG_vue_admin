@@ -33,6 +33,16 @@
             >
               <el-input type="phone" v-model.number="form.phone" autocomplete="off"></el-input>
             </el-form-item>
+            <el-form-item label="区域" :label-width="formLabelWidth">
+              <el-select v-model="form.regionId" placeholder="请选择区域" >
+                <el-option
+                  v-for="item in $store.state.regions"
+                  :key="item.id"
+                  :label="item.regionName"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
             <el-form-item label="角色" :label-width="formLabelWidth">
               <el-select v-model="form.roleId" placeholder="请选择角色" >
                 <el-option
