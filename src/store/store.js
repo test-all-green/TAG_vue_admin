@@ -51,11 +51,10 @@ const store = new Vuex.Store({
     },
     async fetchParkingOrders({ commit }, { page, pageSize }) {
       var aaa=await getParkingOrders(page, pageSize)
-      console.log('content', aaa.content);
+      console.log('aaa :', aaa);
       commit('setParkingOrders', await getParkingOrders(page, pageSize))
     },
     async addParkingStaffs({ dispatch }, { form, page, pageSize }) {
-      console.log(form)
       await addUser(form)
       dispatch('fetchParkingStaffs', { page: page, pageSize })
     },
@@ -72,8 +71,12 @@ const store = new Vuex.Store({
   },
   getters: {
     showParkingOrders: state => state.parkingOrders.content.map((item) => {
-      item.parkingOrderType = item.parkingOrderType == 1 ? '存车' : '取车'
-      item.parkingOrderStatus = item.parkingOrderStatus == 1 ? '存取中' : '无人处理'
+      item.type = item.type == 1 ? '存车' : '取车'
+      if(item.status=="PW") item.status ='无人处理'
+      if(item.status=="PI") item.status ='存取中'
+      if(item.status=="F") item.status ='完成'
+      if(item.status=="WP") item.status ='前往地点'
+      if(item.status=="C") item.status ='前往地点'
       return item;
     })
   }

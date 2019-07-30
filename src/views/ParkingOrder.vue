@@ -11,8 +11,8 @@
         >
             <el-table-column prop="id" label="id"></el-table-column>
             <el-table-column prop="carNum" label="车牌号"></el-table-column>
-            <el-table-column prop="parkingOrderType" label="类型"></el-table-column>
-            <el-table-column prop="parkingOrderStatus" label="状态"></el-table-column>
+            <el-table-column prop="type" label="类型"></el-table-column>
+            <el-table-column prop="status" label="状态"></el-table-column>
         </el-table>
         <el-pagination
             @size-change="handleSizeChange"
