@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Layout from '@/views/layout/layout'
 import User from '@/views/User'
 import ParkingLot from '@/views/ParkingLot'
+import ShareParkingLot from '@/views/ShareParkingLot'
 import ParkingOrder from '@/views/ParkingOrder'
 
 Vue.use(Router)
@@ -11,10 +12,15 @@ export default new Router({
     mode: 'history',
     routes: [
         {
+            path: '/login',
+            component: () => import('@/views/login'),
+            hidden: true
+          },
+        {
             path: '/',
             name: 'Layout',
             component: Layout,
-            redirect: '/user',
+            redirect: '/login',
             children:[
                 {
                     path: '/user',
@@ -23,12 +29,17 @@ export default new Router({
                 },
                 {
                     path: '/parkingLot',
-                    name: 'parkingLot',
+                    name: 'ParkingLot',
                     component: ParkingLot,
                 },
                 {
+                    path: '/shareParkingLot',
+                    name: 'ShareParkingLot',
+                    component: ShareParkingLot,
+                },
+                {
                     path: '/parkingOrder',
-                    name: 'parkingOrder',
+                    name: 'ParkingOrder',
                     component: ParkingOrder,
                 }
             ]

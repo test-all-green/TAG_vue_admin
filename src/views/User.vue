@@ -9,7 +9,7 @@
     </div>
     <el-dialog title="新建用户" :visible.sync="dialogFormVisible" @close="closeAdd" width="60%">
       <el-row type="flex" justify="center">
-        <el-col :span="16" >
+        <el-col >
           <el-form :model="form" label-width="120" ref="form">
             <el-form-item label="工号" :label-width="formLabelWidth">
               <el-input v-model="form.employeeId" autocomplete="off"></el-input>
@@ -90,11 +90,11 @@
       </div>
     </el-dialog>
     <el-table :data="$store.state.staffs.content" border style="width: 100%" height="531px" size="small">
-      <el-table-column prop="employeeId" label="工号" width="120" align="center"></el-table-column>
-      <el-table-column prop="employeeName" label="姓名" width="150" align="center"></el-table-column>
-      <el-table-column prop="email" label="email" align="center"></el-table-column>
-      <el-table-column prop="phone" label="电话号码" align="center"></el-table-column>
-      <el-table-column label="职位" width="150" align="center">
+      <el-table-column prop="employeeId" label="工号" width="120"></el-table-column>
+      <el-table-column prop="employeeName" label="姓名" width="150"></el-table-column>
+      <el-table-column prop="email" label="email"></el-table-column>
+      <el-table-column prop="phone" label="电话号码"></el-table-column>
+      <el-table-column label="职位" width="150">
         <template slot-scope="scope">{{$store.state.characters.filter(ei=>ei.id===scope.row.roleId)[0].roleName}}</template>
       </el-table-column>
       <el-table-column label="操作" align="center" fixed="right" width="150">

@@ -18,7 +18,10 @@ export default {
       pageSize: 10,
       condition: {}
     });
-
+    this.$store.dispatch("fetchShareParkingLots", {
+      page: 1,
+      pageSize: 10
+    });
     this.$store.dispatch("fetchParkingOrders", { page: 1, pageSize: 10 });
 
     this.$store.dispatch("getRegion");

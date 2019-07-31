@@ -1,0 +1,1 @@
+GET http://localhost:8088/share-parking-lots?page=1&pageSize=10 HTTP/1.1

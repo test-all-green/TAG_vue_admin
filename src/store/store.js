@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import moment from "moment";
 import { getUser, addUser } from "@/api/user";
 import { getParkingLots, postParkingLot } from "@/api/parkingLot";
+import { getShareParkingLots } from "@/api/shareParkingLot";
 import { getParkingOrders } from "@/api/parkingOrder";
 import { getStaffCharacter } from "@/api/staffCharacter"
 import { getRegion } from "@/api/region"
@@ -13,14 +15,9 @@ const store = new Vuex.Store({
     parkingOrders: {
       content:[]
     },
+    shareParkingLots:[],
     characters: [],
     regions: [],
-    demo: 'demo'
-  },
-  getters: {
-    getDemo(state) {
-      return state.demo;
-    },
   },
   mutations: {
     changeDemo(state, val) {
@@ -31,6 +28,9 @@ const store = new Vuex.Store({
     },
     setParkingLots(state, parkingLots) {
       state.parkingLots = parkingLots
+    },
+    setShareParkingLots(state, shareParkingLots) {
+      state.shareParkingLots = shareParkingLots
     },
     setParkingOrders(state, parkingOrders) {
       state.parkingOrders = parkingOrders
@@ -48,6 +48,12 @@ const store = new Vuex.Store({
     },
     async fetchParkingLots({ commit }, { page, pageSize ,condition}) {
       commit('setParkingLots', await getParkingLots(page, pageSize,condition))
+    },
+    async fetchShareParkingLots({ commit }, { page, pageSize }) {
+      console.log("share");
+      var aaa=await getShareParkingLots(page, pageSize)
+      console.log('aaa :', aaa);
+      commit('setShareParkingLots', await getShareParkingLots(page, pageSize))
     },
     async fetchParkingOrders({ commit }, { page, pageSize }) {
       var aaa=await getParkingOrders(page, pageSize)
@@ -70,6 +76,16 @@ const store = new Vuex.Store({
     }
   },
   getters: {
+    showShareParkingLots:state=>state.shareParkingLots.content.map((item)=>{
+      if (item.status==0) item.status='未发布'
+      if (item.status==1) item.status='已发布'
+      if (item.status==2) item.status='使用中'
+      if(item.beginTime==null) item.beginTime='未设置'
+      else item.beginTime=moment(item.beginTime).format("YYYY/MM/DD HH:mm:ss");
+      if(item.endTime==null) item.endTime='未设置'
+      else item.endTime=moment(item.endTime).format("YYYY/MM/DD HH:mm:ss");
+      return item;
+    }),
     showParkingOrders: state => state.parkingOrders.content.map((item) => {
       item.type = item.type == 1 ? '存车' : '取车'
       if(item.status=="PW") item.status ='无人处理'

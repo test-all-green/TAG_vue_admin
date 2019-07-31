@@ -11,7 +11,11 @@
   </el-menu-item>
   <el-menu-item index="/parkingLot" >
     <i class="el-icon-truck" ></i>
-    <span slot="title">停车场管理</span>
+    <span slot="title">公共停车场管理</span>
+  </el-menu-item>
+  <el-menu-item index="/shareParkingLot" >
+    <i class="el-icon-truck" ></i>
+    <span slot="title">共享停车场管理</span>
   </el-menu-item>
   <el-menu-item index="/parkingOrder">
     <i class="el-icon-document"></i>
